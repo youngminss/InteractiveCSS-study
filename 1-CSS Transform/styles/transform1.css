@@ -1,0 +1,31 @@
+.box-container {
+  display: flex;
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  border: 2px solid black;
+  background: rgba(255, 255, 0, 0.7);
+}
+.box:hover {
+  /* 일반 확대를 구현한다 치면 => 나머지 요소에도 reflow 심함 */
+  /* width: 200px;
+  height: 200px; */
+
+  /* 크기 확대 축소 */
+  /* transform: scale(2);  */
+  /* 회전 */
+  transform: rotate(45deg);
+  /* 비틀기 */
+  /* transform: skew(-30deg); */
+  /* 이동 */
+  /* transform: translate(50px, 10px); */
+
+  /* 단축속성 */
+  /* transform: scale(1.2) rotate(45deg) translate(30px, 50px); */
+
+  /* 기준점 */
+  transform-origin: right top;
+  transform-origin: 100% 0%;
+}
