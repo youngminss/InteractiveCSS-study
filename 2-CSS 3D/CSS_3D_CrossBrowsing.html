@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS_3D_CrossBrowsing</title>
+    <style>
+      /* 
+      1️⃣ -webkit- : -webkit-backface-visibility 라고 따라 설정해줘야, "크롬","사파리"에서 문제없이 작동
+      2️⃣ ★ -ms- : transform-style: preserve-3d 가 "익스플로러 최신버전에서도 지원안함" >> 꼼수가 많이 필요
+       */
+      .world {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fff000;
+        width: 80vw;
+        height: 80vh;
+
+        perspective: 500px;
+      }
+
+      /* explorer 상황에서 preserve-3d 박스 적용안됌, 필요없음
+      .card {
+        position: relative;
+        margin: 1em;
+        transition: 0.5s;
+        transform: rotateY(0deg);
+        transform-style: preserve-3d;
+      } */
+
+      .card-side {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        left: 50%;
+        right: 50%;
+        width: 100px;
+        height: 150px;
+        margin: -75px 0 0 -50px;
+        font-size: 1.5rem;
+        border-radius: 0.5em;
+
+        /* 
+          1️⃣ backface-visibility 같은 속성(이 외에도 많음)은, "브라우저 마다"
+          - 지원하는 브라우저가 있고, 아니면 그 브라우저만의 지원방식이 있어서 이를 "구분"해줘야한다.
+          - "vender prefix"를 적어서
+            + "-webkit-" : "사파리" or "크롬"
+            + "-moz-" : "mozila"
+            + "-ms-" : 마이크로소프트
+          - 🔎 마지막에는 항상 표준 속성으로 해야 된다.
+          - CSS는 아래것이 위에 것을 덮어 쓰기 때문
+        */
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transition: 1s;
+      }
+      .card-side-front {
+        background: white;
+        z-index: 1;
+      }
+      .card-side-back {
+        background: red;
+        transform: rotateY(180deg);
+      }
+      .world:hover .card-side-front {
+        transform: rotateY(180deg);
+      }
+      .world:hover .card-side-back {
+        transform: rotateY(360deg);
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div class="world">
+        <div class="card-side card-side-front">Front</div>
+        <div class="card-side card-side-back">Back</div>
+      </div>
+    </div>
+  </body>
+</html>
