@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Interactive Web</title>
+    <style>
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      .characters {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background: #fff000;
+      }
+      .ilbuni {
+        width: 100px;
+        cursor: pointer;
+      }
+      .characters .ilbuni {
+        display: inline-block;
+      }
+      .special {
+        border: 10px dashed red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="characters">
+      <div class="ilbuni a">
+        <img src="images/ilbuni_0.png" alt="일분이" />
+      </div>
+      <div class="ilbuni b">
+        <img src="images/ilbuni_1.png" alt="일분이" />
+      </div>
+      <div class="ilbuni c">
+        <img src="images/ilbuni_2.png" alt="일분이" />
+      </div>
+    </div>
+    <div class="ilbuni d">
+      <img src="images/ilbuni_3.png" alt="일분이" />
+    </div>
+
+    <script>
+      /**
+        1️⃣ document.querySelctor
+      */
+      // 특정 클래스 요소에 직접접근
+      const ilbuniB = document.querySelector(".b");
+      console.log(ilbuniB);
+
+      // 공통된 선택자를 가진 요소들에 대해 그냥 querySelector 접근 -> DOM tree 중에 가장 가까운 DOM Element 에 접근
+      const ilbuni = document.querySelector(".ilbuni");
+      console.log(ilbuni);
+
+      // 동일한 선택자에 해당하는 요소들 한번에 가져오기
+      const ilbunis = document.querySelectorAll(".ilbuni");
+      console.log(ilbunis);
+
+      // NodeList(배열 X), 인덱싱 접근
+      console.log(ilbunis[2]);
+
+      // CSS 선택자로도 querySelctor 접근 가능 🔍
+      const nth_ilbuniA = document.querySelector(".ilbuni:nth-child(1)");
+      console.log(nth_ilbuniA);
+      console.clear();
+
+      /**
+       * 2️⃣ CSS 속성 넣기 & 가져오기
+       * - 그 중 data-set 속성 설정, 가져오기
+       */
+      const characters = document.querySelector(".characters");
+      console.log(characters);
+
+      // Element 에 속성(Attribute) 설정
+      characters.setAttribute("data-id", 123);
+
+      // Element 에 속성 가져오기
+      console.log(characters.getAttribute("data-id"));
+      console.clear();
+
+      /**
+       * 3️⃣ HTML 동적 추가 & 삭제
+       * - [방법 1] HTML 태그 생성 : document.createElement('태그명')
+       * - [방법 2] HTML 태그 생성 : Element.innerHTML = "HTML 태그형식"
+       *
+       * Element.appendChild(Target Element) : Element(부모요소) 에 "가장마지막에" Target Element 를 삽입
+       * Element.removeChild(Target Element) : Element(부모요소) 에서, Target Element 가 있으면 DOM Tree 에서 삭제
+       * */
+
+      // p태그 동적 생성
+      // const pElem = document.createElement("p");
+
+      // p태그에 들어갈 a태그 String literal 로 생성해놓음
+      // const aTagMessage = `<a href="#">1분 코딩 너무 재밌음 !!</a>`;
+
+      // p태그에 안에 aTagMessage 태그 넣어줌
+      // pElem.innerHTML = aTagMessage;
+
+      // characters 박스에 새로 만든 paragraph Element 동적 삽입
+      // characters.appendChild(pElem);
+
+      // 일분이 A 삭제
+      // characters.removeChild(document.querySelector(".a"));
+
+      /**
+       * 4️⃣ CSS class 동적 추가 & 삭제 & 토글
+       * - 클래스 추가 : Element.classList.add('클래스명'), (💡 Element.className = "클래스명"은 "아예 새로운" 클래스 이름)
+       * - 클래스 삭제 : Element.classList.remove('클래스명')
+       * - 클래스 토글 : Element.classList.toggle('클래스명')
+       * */
+
+      const ilbuniC = document.querySelector(".c");
+      ilbuniC.classList.add("special");
+
+      ilbuniB.classList.remove("ilbuni");
+
+      ilbuniB.classList.toggle("special");
+      ilbuniB.classList.toggle("special");
+    </script>
+  </body>
+</html>
