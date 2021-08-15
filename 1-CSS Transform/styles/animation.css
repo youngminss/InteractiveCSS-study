@@ -57,7 +57,7 @@ keyframes(키프레임)
 .box:hover {
   /* 애니메이션 중간동작 */
   /* 기본 - 아무것도 없음 */
-  /* animation-play-state: running; */
+  animation-play-state: running;
   /* 일시정지 */
   /* animation-play-state: paused; */
 }
