@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Display - Flex</title>
+    <style>
+      .container {
+        /* 0️⃣ flexbox 적용 */
+        display: flex;
+
+        /* 1️⃣ flexbox 축 변경 */
+
+        /* 가로축(default) */
+        /* flex-direction: row; */
+        /* 세로축 */
+        /* flex-direction: column; */
+        /* 가로축인데 반대편(오른쪽)부터(요소순서 역시 반대로) */
+        /* flex-direction: row-reverse; */
+        /* 세로축인데 반대편(아래)부터(요소순서 역시 반대로) */
+        /* flex-direction: column-reverse; */
+
+        /* 2️⃣ flexbox 가로축 정렬 설정 */
+
+        /* 가로축 기준 -> 시작점쪽(왼쪽)으로 정렬 */
+        /* 세로축 기준 -> 시작점쪽(위쪽)으로 정렬 */
+        justify-content: flex-start;
+        /* 가로축 기준 -> 끝점(오른쪽)으로 정렬 */
+        /* 세로축 기준 -> 끝점(아래)으로 정렬 */
+        /* justify-content: flex-end; */
+
+        /* 가로축 기준 -> width 기준 가운데로 정렬 */
+        /* 세로축 기준 -> height 기준 가운데로 정렬 */
+        /* justify-content: center; */
+
+        /* 가로축 기준 -> 각 컨텐츠 사이에 width 공간(여백)을 균일하게 */
+        /* 세로축 기준 -> 각 컨텐츠 사이에 height 공간(여백)을 균일하게 */
+        /* justify-content: space-between; */
+
+        /* 가로축 기준 -> 각 컨텐츠를 먼저 균일, 그리고 컨텐츠별 양옆 여백 균일하게 */
+        /* 세로축 기준 -> 각 컨텐츠를 먼저 균일, 그리고 컨텐츠별 위아래 여백 균일하게 */
+        /* justify-content: space-around; */
+
+        /* 가로축 기준 -> 각 컨텐츠 사이사이 앞옆 공백 균일 */
+        /* 세로축 기준 -> 각 컨텐츠 사이사이 위아래 공백 균일 */
+        /* justify-content: space-evenly; */
+
+        /* 3️⃣ flexbox 세로축 정렬 */
+        /* 가로축 기준 -> 위아래로 아이템영역을 쫙~늘려줌(default) */
+        /* 세로축 기준 -> 양옆으로 아이텀영역을 쫙~늘려줌(default) */
+        /* align-items: stretch; */
+
+        /* 가로축 기준 -> 위쪽 영역에 배치 */
+        /* 세로축 기준 -> 왼쪽 영역에 배치 */
+        /* align-items: flex-start; */
+
+        /* 가로축 기준 -> 아래 영역에 배치 */
+        /* 세로축 기준 -> 오른쪽 영역에 배치 */
+        /* align-items: flex-end; */
+
+        /* 가로축 기준 -> height 기준 중앙에 배치 */
+        /* 세로축 기준 -> width 기준 중앙에 배치 */
+        /* align-items: center; */
+
+        height: 80vh;
+        background: gray;
+      }
+      .item {
+        border: 3px solid black;
+        background: white;
+
+        /* 4️⃣ flex 아이템별 영역 설정 */
+        /* flex-grow : 각 아이템에 컨텐츠제외한 "여백끼리의 비율", "숫자"로 "비율설정"  */
+        /* flex-basis : 각 아이템의 컨텐츠 "기본크기" 설정(default: auto) */
+        /* flex-shrink : flex-grow 와 쌍을 이루는 속성, 각 아이템이 "flex-basis의 값보다 작아질 수 있는가 ?"를 결정(default: 1)        각 아이템별 "어찌되었든, "동일한 간격" 설정 */
+
+        /* 동일한 간격 flex 아이템 단축 설정(일반적으로, 가장 많이쓰이는) */
+        /* flex: flex-grow(1), flex-shrink(1), flex-basis(0)  순 */
+        /* 
+					flex-grow: 1;
+					flex-basis: 0;
+					과 동일
+				*/
+        flex: 1;
+      }
+
+      /* .item:nth-child(1) {
+        flex-grow: 1;
+      }
+      .item:nth-child(2) {
+        flex-grow: 2;
+      }
+      .item:nth-child(3) {
+        flex-grow: 3;
+      }
+      .item:nth-child(4) {
+        flex-grow: 1;
+      }
+      .item:nth-child(5) {
+        flex-grow: 3;
+      } */
+    </style>
+  </head>
+  <body>
+    <!-- 
+			[레이아웃을 쉽게 잡아가는 법]
+			제일 베스트 : "Flex" 와 "Grid" 를 적절히 섞어 쓰는 것
+			- Grid 로 "전체 레이아웃을 잡고", Flex 로 "각 그리드 안에서 요소들의 레이아웃을 배치하는 방식"
+			- 단, Grid는 아직 지원하지 않는 브라우저가 좀 있어서, 실무에서 그렇게 많이 사용하지는 "아직" 아닌 것 같다는 의견
+			- 하지만, 기본적인 사용법은 미리 알고 있으면 좋을 듯하다.
+		 -->
+    <div class="container">
+      <div class="item">AAA</div>
+      <div class="item">B</div>
+      <div class="item">CCCCC</div>
+      <div class="item">DDD</div>
+      <div class="item">EE</div>
+    </div>
+  </body>
+</html>
