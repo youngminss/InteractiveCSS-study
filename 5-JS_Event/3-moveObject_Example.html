@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Web</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/3-moveObject_Example.css" />
+  </head>
+  <body>
+    <div class="stage">
+      <div class="ilbuni a"></div>
+      <div class="ilbuni b"></div>
+      <div class="ilbuni c"></div>
+    </div>
+  </body>
+
+  <script>
+    (function () {
+      const ilbunis = document.querySelectorAll(".ilbuni");
+      const stage = document.querySelector(".stage");
+
+      function clickHandler(e) {
+        stage.removeChild(this);
+        // 제거, 다른 방법
+        // this.parentNode.removeChild(this);
+      }
+
+      ilbunis.forEach((ilbuni) => {
+        ilbuni.addEventListener("click", clickHandler);
+      });
+    })();
+  </script>
+</html>

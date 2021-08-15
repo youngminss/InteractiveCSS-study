@@ -1,0 +1,49 @@
+.stage {
+  /* vw: viewport width */
+  /* vh: viewport heigth */
+  /* width 와 height 에 뷰포트 단위를 같게해서 설정하면, "비율"개념을 지킬 수 있다. */
+  width: 100vw;
+  height: 75vw;
+  position: relative;
+  background: yellow;
+}
+
+@keyframes moveing {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(80vw);
+  }
+}
+.ilbuni {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+
+  /* cover : 완전히 꽉참(짤릴 수 있음) */
+  /* background-size: cover; */
+  background-size: contain;
+  animation: moveing infinite alternate;
+}
+
+.ilbuni.a {
+  background-image: url("../images/ilbuni_1.png");
+  left: 5%;
+  bottom: 5%;
+  animation-duration: 2s;
+}
+.ilbuni.b {
+  background-image: url("../images/ilbuni_2.png");
+  left: 10%;
+  bottom: 2%;
+  animation-duration: 3s;
+}
+.ilbuni.c {
+  background-image: url("../images/ilbuni_3.png");
+  left: 3%;
+  bottom: 4%;
+  animation-duration: 4s;
+}

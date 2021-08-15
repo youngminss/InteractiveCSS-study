@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Interactive Web</title>
+    <style>
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      .characters {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background: #fff000;
+      }
+      .ilbuni {
+        width: 100px;
+        cursor: pointer;
+      }
+      .characters .ilbuni {
+        display: inline-block;
+      }
+      .special {
+        border: 10px dashed red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="characters">
+      <div class="ilbuni a">
+        <img src="images/ilbuni_0.png" alt="일분이" />
+      </div>
+      <div class="ilbuni b">
+        <img src="images/ilbuni_1.png" alt="일분이" />
+      </div>
+      <div class="ilbuni c">
+        <img src="images/ilbuni_2.png" alt="일분이" />
+      </div>
+      <div class="ilbuni d">
+        <img src="images/ilbuni_3.png" alt="일분이" />
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        const characters = document.querySelector(".characters");
+
+        function clickHandler(e) {
+          /**
+           * 1️⃣ 이걸로 알수 있다. 특정 요소에 event 에 대해
+           * - e.target : 실제로 선택된 바로 그 객체
+           * - e.currentTarget : 이벤트를 걸어놓은 그 객체
+           * - this : e.currentTarget 과 같이, 이벤트를 걸어놓은 그 객체
+           * */
+          console.log(`e.target : `, e.target);
+          console.log(`e.currentTarget : `, e.currentTarget);
+          console.log(`this : `, this);
+          this.classList.toggle("special");
+        }
+        characters.addEventListener("click", clickHandler);
+      })();
+    </script>
+  </body>
+</html>

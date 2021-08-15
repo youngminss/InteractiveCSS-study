@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Interactive Web</title>
+    <style>
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      .characters {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background: #fff000;
+      }
+      .ilbuni {
+        width: 100px;
+        cursor: pointer;
+      }
+      .characters .ilbuni {
+        display: inline-block;
+      }
+      .special {
+        border: 10px dashed red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="characters">
+      <div class="ilbuni a">
+        <img src="images/ilbuni_0.png" alt="일분이" />
+      </div>
+      <div class="ilbuni b">
+        <img src="images/ilbuni_1.png" alt="일분이" />
+      </div>
+      <div class="ilbuni c">
+        <img src="images/ilbuni_2.png" alt="일분이" />
+      </div>
+    </div>
+    <div class="ilbuni d">
+      <img src="images/ilbuni_3.png" alt="일분이" />
+    </div>
+
+    <script>
+      /**
+       * 1️⃣ script 파일이 body 이전에 위치할 경우
+       * */
+      // HTML파일이 -> DOM Tree 로 모~두 로드된 후에
+      // window.addEventListener('load', callBackFn)
+
+      // DOM Tree 구조만 완성되면
+      // window.addEventListener('DOMContentLoaded', callBackFn)
+
+      /**
+       * 2️⃣ 결국 "전역 변수" 개념으로 사용하는데 => 좋지 X
+       * - 함수블록 안에 넣어 "지역 변수" 개념으로 사용하자.
+       * */
+
+      // 전역변수 같이 사용 💩
+      // 전역
+      const ilbuniC = document.querySelector(".ilbuni.c");
+
+      // 전역
+      ilbuniC.addEventListener("click", function () {
+        this.classList.toggle("special");
+      });
+
+      // 지역변수 같이 사용(더 자세히는 "익명함수" 사용한 것) 👍
+      (function () {
+        const ilbuniB = document.querySelector(".ilbuni.b");
+
+        ilbuniB.addEventListener("click", function () {
+          this.classList.toggle("special");
+        });
+      })();
+    </script>
+  </body>
+</html>
