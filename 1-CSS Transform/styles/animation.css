@@ -9,6 +9,7 @@ keyframes(키프레임)
     transform: translate(0, 0);
   }
   50% {
+    background: red;
     transform: translate(300px, 0);
   }
   100% {
@@ -23,5 +24,40 @@ keyframes(키프레임)
   height: 100px;
   border: 2px solid black;
   background: #fff000;
-  animation: moveAnimation 1s 2;
+
+  /* 애니메이션 기본 */
+  /* animation-duration: 1.5s;
+  animation-name: moveAnimation;
+  animation-delay: 0s;
+  animation-iteration-count: 2;
+	animation-timing-function: linear;
+	*/
+
+  /* 애니메이션 진행방향 */
+  /* 일반방향 */
+  /* animation-direction: normal; */
+  /* 반대반향 */
+  /* animation-direction: reverse; */
+  /* 갔다가 왔다가 */
+  /* animation-direction: alternate; */
+  /* 반대로 시작해서 갔다가 왔다가 */
+  /* animation-direction: alternate-reverse; */
+
+  /* 애니메이션 마지막 설정 */
+  /* animation-fill-mode: none; */
+  /* 애니메이션 다 끝나면 원 위치 */
+  /* animation-fill-mode: backwards; */
+  /* 애니메이션 끝나면 마지막 위치 */
+  /* animation-fill-mode: forwards; */
+  /* animation-fill-mode: both; */
+
+  /* 애니메이션 기본 단축 */
+  animation: 2s moveAnimation 0s 2 cubic-bezier(0.25, 0.1, 0, 1.67);
+}
+.box:hover {
+  /* 애니메이션 중간동작 */
+  /* 기본 - 아무것도 없음 */
+  /* animation-play-state: running; */
+  /* 일시정지 */
+  /* animation-play-state: paused; */
 }
