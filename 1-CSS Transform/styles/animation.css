@@ -1,0 +1,27 @@
+/* CSS Animation 과 CSS Transition 의 가장 큰 차이
+- 키프레임이 있고(Animation) 없고(Transition) 의 차이다.
+keyframes(키프레임)
+- "변화가 있는 지점"을 설정할 수 있는 것
+- 애니메이션 전체기간을 0% ~ 100% 로 분할시켜 적용시킬 수 있다. */
+
+@keyframes moveAnimation {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(300px, 0);
+  }
+  100% {
+    transform: translate(300px, 300px);
+  }
+}
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border: 2px solid black;
+  background: #fff000;
+  animation: moveAnimation 1s 2;
+}
