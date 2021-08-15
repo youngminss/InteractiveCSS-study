@@ -1,0 +1,42 @@
+/*
+ Frame_by_Frame Animation 🔍
+- split 이미지가 필요하다.
+- 옛날에 책 구석에 여러장에 거쳐서 쫄라맨 달리기 만드는 그런 느낌이다. 
+- 구글에 "특정 날"에 애니메이션 로고 적용시키는 거도 이 원리로 자주 한다고 한다.
+*/
+
+/*
+Note
+이미지를 사용할 때, 보통 사용할 크기의 가로*세로를 "최소 2배"는 높은 해상도를 이용한다. 🔍
+- 실제로 사용할 때 "고해상도"이미지 처럼 사용하기 위해서이다.
+
+GIF가 있는데, Frame_by_Frame Animation 으로 굳이 하는 이유 🔍
+- GIF사용하면, 결국 가장자리에 "안티앨리어싱" 문제가 해결이 안된다.
+- "안티앨리어싱"이란, 가장자리가 깨지는 듯한, 확대해서 보면, "흰"부분이 눈에 보이게 된다. (검은 배경이면 눈에 띄게 보임)
+- Frame_by_Frame 방식으로 하면, 결국 PNG(배경이 없는) 이미지의 연속이므로, 안티앨리어싱 문제는 없다.
+- 또, 결국 CSS Animation 을 이용하는 것이므로, "코드로 인한 Animation 조작이 가능해진다." (GIF 는 "영상"이기 때문에 불가)
+*/
+
+@keyframes spaceshipAni {
+  /* 우리는 결국 이미지의 맨 처음부터, 맨 끝 위치까지 이미지를 잘라서 "프레임"별로 보여줄 것이다.
+	시작은 어차피 0 0(left, top 순)으로 설정했으니, to(100%) 만 설정하면 된다. */
+  /* from = 0% 와 같다. */
+  /* from{
+
+	} */
+  /* to = 100%와 같다. */
+  to {
+    background-position: -2550px 0;
+  }
+}
+.spaceship {
+  /* 원본이미지는 5100*300 이다. */
+  /* 우리가 이 원본 배경이미지를 넣을 div 박스는 height 크기의 절반 150px 이다. */
+  width: 150px;
+  height: 150px;
+  background: url("../images/sprite_spaceship.png") no-repeat 0 0 / auto 150px;
+  /* 💡 순서대로 (이미지url, 반복여부 left,top / width(auto 가능, height와 자동비율), height(auto 가능, width 와 자동비율)) */
+  animation: spaceshipAni 1s infinite reverse steps(17);
+  /* animation-timing-function: steps(17)
+	- 키 프레임 단위로 작동하려는 animation 에 대해, steps(n)에서 n에 대해 작동을 잘라서 작동시키는 것 같다. */
+}
