@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transition</title>
+    <style>
+      .ball {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        left: 0;
+        top: 0;
+        /* 정확히 마우스 포인터 꼭지점이 원에 정중앙이 배치되도록 조정하는 법 1️⃣ */
+        /* margin: -15px 0 0 -15px; */
+        border-radius: 50%;
+        background: red;
+        transition: 1s;
+      }
+      .ball.end {
+        background: dodgerblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ball"></div>
+    <script>
+      const ballElem = document.querySelector(".ball");
+
+      window.addEventListener("click", function (e) {
+        // 🔍 window.clientX : 현재 브라우저 상에서, 이벤트가 발생한 x 위치
+        // 🔍 window.clientX : 현재 브라우저 상에서, 이벤트가 발생한 y 위치
+
+        // ballElem.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        // 정확히 마우스 포인터 꼭지점이 원에 정중앙이 배치되도록 조정하는 법 2️⃣
+        ballElem.style.transform = `translate(${e.clientX - 15}px, ${e.clientY - 15}px)`;
+      });
+
+      ballElem.addEventListener("transitionend", function (e) {
+        console.log(e.elapsedTime); // 얼마나 transition 이 작동했냐
+        console.log(e.propertyName); // transition 에 의해 변하는 속성명이 무엇이냐.
+        this.classList.add("end");
+      });
+      // 🔍 transitionend Event : 요소의 transition 효과가 있을 경우, transition 이 종료시, 적용할 수 있는 이벤트
+      // 🔍 transitionstart Event : 요소의 transition 효과가 있을 경우, transition 이 시작시, 적용할 수 있는 이벤트
+    </script>
+  </body>
+</html>

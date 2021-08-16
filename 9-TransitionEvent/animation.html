@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation</title>
+    <style>
+      @keyframes ball-ani {
+        from {
+          tranfrom: translate(0, 0);
+        }
+        to {
+          transform: translate(200px, 200px);
+        }
+      }
+      .ball {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        left: 0;
+        top: 0;
+        border-radius: 50%;
+        background: red;
+        /* animation: ball-ani 1s 3 alternate forwards; */
+      }
+      .ball.end {
+        border: 5px solid dodgerblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ball"></div>
+
+    <script>
+      const ballElem = document.querySelector(".ball");
+
+      ballElem.addEventListener("click", function () {
+        ballElem.style.animation = "ball-ani 1s 3  forwards";
+      });
+      ballElem.addEventListener("animationstart", function () {
+        ballElem.classList.add("end");
+      });
+      ballElem.addEventListener("animationiteration", function () {
+        console.log("반복!");
+      });
+
+      // 🔍 animationstart Event : animation 효과가 있을 때 적용되는 이벤트, animation 이 끝나는 시점에 작동
+      // 🔍 animationend Event : animation 효과가 있을 때 적용되는 이벤트, animation 이 시작되는 시점에 작동
+      // 🔍 animationiteration Event : animation 효과가 있을 때 적용되는 이벤트, 초기 제외, 반복될 때마다 작동
+    </script>
+  </body>
+</html>
