@@ -33,6 +33,9 @@
       left: 0;
       top: 0;
       background: black;
+
+      /* 일분이를 감싸고 있는 검은배경 뒤에 숨은 것같이 하기위해, overflow 되는 것은 숨기기 */
+      overflow: hidden;
     }
 
     /* 각 문의 일분이이미지 컨테이너(의미상 z-index 1) */
@@ -45,6 +48,17 @@
       background-repeat: no-repeat;
       background-position: 50% 100%;
       background-size: contain;
+
+      /* 
+			1️⃣ 요소를 이동시키는 데는 translate 만큼 부드러운 것이 없다.
+			2️⃣ 2D 이동만 한다해도, translate3d 값을 사용하면, 브라우저가 "하드웨어 가속(GPU 사용)"을 하려고 하기때문에 성능상 이점
+			3️⃣ 레이아웃을 할 때, "상대값(%, vw, em, rem 등)"을 사용하는 것이, 브라우저 환경마다 다르게 보이는 레이아웃에 대응하기 좋다. 유지보수 측면에서도 좋다.
+			 */
+      transform: translate3d(100%, 0, 0);
+      /* 🔍 translate에서 %는 "해당 선택자 안에서의 절대적인 width 와 height 단위 비율에 (0 ~ 100%) 이다." */
+
+      transition: 0.5s 0.5s;
+      /* transition-duration: 0.5s; transition-delay: 0.5s; 순서와 같은 것 */
     }
 
     .door:nth-child(1) .ilbuni {
@@ -64,6 +78,13 @@
       top: 0;
       width: 100%;
       height: 100%;
+
+      /* 
+			문 여는 과정이 0.5초 길이로 작동하게
+			회전 축을 중심(default)이 아닌, 왼쪽으로 
+			*/
+      transition: 0.5s;
+      transform-origin: 0%;
     }
     .door:nth-child(1) .door-body {
       background: rgba(255, 0, 0, 0.7);
@@ -74,22 +95,37 @@
     .door:nth-child(3) .door-body {
       background: rgba(0, 0, 255, 0.7);
     }
+
+    /* 문에 마우스 올렸을 때, 문이 열리는 효과 CSS 로 */
+    .door:hover .door-body {
+      /* 각 문마다 perspective 를 줘서, "동일한" 3d 느낌을 주기 위함 */
+      transform: perspective(800px) rotateY(-110deg);
+    }
+    /* 문이 열리면서 일분이가 잠시 뒤에 나왔다, 잠시뒤에 들어가는 효과 CSS */
+    .door:hover .ilbuni {
+      /* 일분이 위치를 translate 하지 않았던 상태로 -> 그럼 숨어있다가 나온것 처럼 보이겠지 */
+      transform: translate3d(0, 0, 0);
+    }
   </style>
   <body>
     <div class="stage">
       <div class="door">
-        <div class="door-back"></div>
-        <div class="ilbuni"></div>
+        <!-- 각 일분이가 각 검은 박스영역에 오른쪽에 숨어있다가 문이열리면 나오게하는 효과를 만들기 위해 배치 변경  -->
+        <div class="door-back">
+          <div class="ilbuni"></div>
+        </div>
         <div class="door-body"></div>
       </div>
       <div class="door">
-        <div class="door-back"></div>
-        <div class="ilbuni"></div>
+        <div class="door-back">
+          <div class="ilbuni"></div>
+        </div>
         <div class="door-body"></div>
       </div>
       <div class="door">
-        <div class="door-back"></div>
-        <div class="ilbuni"></div>
+        <div class="door-back">
+          <div class="ilbuni"></div>
+        </div>
         <div class="door-body"></div>
       </div>
     </div>
