@@ -153,33 +153,57 @@
        * */
       let opendDoorElem;
 
+      /**
+       * 💡 [매우중요]
+       * - 함수는 "간단하고 직관적일수록 좋다."
+       * - 하나의 함수 안에, 뭔가 더 쪼갤수 있을 것 같다면
+       * - 그 기능들을 또 함수로 정의해서 사용하는 것이 재사용성이 좋은 코드다.
+       * */
+      function openDoor(elem) {
+        elem.classList.add("door-opend");
+        opendDoorElem = elem;
+      }
+      function closeDoor(elem) {
+        elem.classList.remove("door-opend");
+      }
+
       function doorHandler(e) {
-        /**
-         * 열려 있는 문이 있다면, 닫아주는 로직 1️⃣
-         * - 지역적으로 DOM Script로 가져오는 방법
-         * - 하지만, 성능 관점에서 DOM 에 접근하는 작업이 가장 성능이 안좋다.
-         * - 더구나, "특정 클래스"에 접근해서 아래 처럼 DOM 요소를 가져오는 방식은 그리 우하하지 않다.
-         * - 그리고, DOM 에 접근했다는 가정하에 작동하는 것인데, 만약 제대로 DOM을 가져오지 못해서 비어있게(null) 된다면 ? => 방지 로직이 필요(optional Operator 나 if 문 정도 ?)
-         * */
-        // let opendDoorElem = document.querySelector(".door-opend");
+        const targetElem = e.target;
 
-        opendDoorElem?.classList.remove("door-opend");
+        opendDoorElem && closeDoor(opendDoorElem);
 
-        let targetElem = e.target;
-        while (!targetElem.classList.contains("door")) {
-          targetElem = targetElem.parentNode;
-
-          if (targetElem.nodeName === "BODY") {
-            targetElem = null;
-            return;
-          }
-
-          if (targetElem.classList.contains("door")) {
-            targetElem.classList.toggle("door-opend");
-            opendDoorElem = targetElem;
-          }
+        if (targetElem.classList.contains("door-body")) {
+          openDoor(targetElem.parentNode);
         }
       }
+
+      // function doorHandler(e) {
+      //   /**
+      //    * 열려 있는 문이 있다면, 닫아주는 로직 1️⃣
+      //    * - 지역적으로 DOM Script로 가져오는 방법
+      //    * - 하지만, 성능 관점에서 DOM 에 접근하는 작업이 가장 성능이 안좋다.
+      //    * - 더구나, "특정 클래스"에 접근해서 아래 처럼 DOM 요소를 가져오는 방식은 그리 우하하지 않다.
+      //    * - 그리고, DOM 에 접근했다는 가정하에 작동하는 것인데, 만약 제대로 DOM을 가져오지 못해서 비어있게(null) 된다면 ? => 방지 로직이 필요(optional Operator 나 if 문 정도 ?)
+      //    * */
+      //   // let opendDoorElem = document.querySelector(".door-opend");
+
+      //   opendDoorElem?.classList.remove("door-opend");
+
+      //   let targetElem = e.target;
+      //   while (!targetElem.classList.contains("door")) {
+      //     targetElem = targetElem.parentNode;
+
+      //     if (targetElem.nodeName === "BODY") {
+      //       targetElem = null;
+      //       return;
+      //     }
+
+      //     if (targetElem.classList.contains("door")) {
+      //       targetElem.classList.toggle("door-opend");
+      //       opendDoorElem = targetElem;
+      //     }
+      //   }
+      // }
 
       stageElem.addEventListener("click", doorHandler);
     })();
