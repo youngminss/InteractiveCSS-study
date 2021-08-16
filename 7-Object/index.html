@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Object</title>
+  </head>
+  <body>
+    <h1>Obect</h1>
+
+    <script>
+      // Bad 💩
+      // const person1 = {
+      //   name: "일분이",
+      //   age: 100,
+      //   introduce: function () {
+      //     console.log(`안녕하세요 저는 ${this.name} 입니다. 나이는 ${this.age} 입니다.`);
+      //   },
+      // };
+      // const person2 = {
+      //   name: "이분이",
+      //   age: 200,
+      //   introduce: function () {
+      //     console.log(`안녕하세요 저는 ${this.name} 입니다. 나이는 ${this.age} 입니다.`);
+      //   },
+      // };
+
+      // console.log(person1.introduce());
+      // console.log(person2.introduce());
+
+      // Good 💡
+      /* 생성자(Constructor) 를 이용 => 객체를 반환
+       * - 생성자에 의해 생성되는 객체, new 키워드가 필요 = 인스턴스(Instance)
+       * - 객체안에 변수들 = "상태를 의미", '속성(Attribute)' 라고함
+       * - 객체안에 함수들 = "행동을 의미", '메서드(Method)' 라고함
+       *
+       */
+      // function Person(name, age) {
+      //   this.name = name;
+      //   this.age = age;
+      //   this.introduce = function () {
+      //     console.log(`안녕하세요 저는 ${this.name} 입니다. 나이는 ${this.age} 입니다.`);
+      //   };
+      // }
+
+      // const person1 = new Person("일분이", 100);
+      // const person2 = new Person("이분이", 200);
+      // person1.introduce();
+      // person2.introduce();
+
+      // Best 👍
+      /**
+       * 클래스(Class) 를 이용
+       * - 클래스안에는 생성자(constructor) 가 존재
+       * - 이 생성자는 처음 new 키워드로 인스턴스 생성시, "최초 한번" 호출
+       * - 클래스에서 생성자는 일반적으로 "멤버변수 초기화에 사용"
+       * - 클래스를 정의하고, 외부에서 new 키워드를 통해, 앞선 생성자로 객체를 반환하는 것과 같은 원리
+       * */
+      class Person {
+        // name;
+        // age;
+        constructor(name, age) {
+          this.name = name;
+          this.age = age;
+        }
+        introduce() {
+          console.log(`안녕하세요 저는 ${this.name} 입니다. 나이는 ${this.age} 입니다.`);
+        }
+      }
+      const person1 = new Person("일분이", 100);
+      const person2 = new Person("이분이", 200);
+      person1.introduce();
+      person2.introduce();
+    </script>
+  </body>
+</html>

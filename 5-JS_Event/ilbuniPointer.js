@@ -3,6 +3,7 @@ class IlbuniPointer {
     let elem = document.createElement("div");
     let timerId;
 
+    // 💡 Element.style.cssText = CSS를 한번에 문자 리터럴 형태로 작성가능
     elem.style.cssText = `
 			position: absolute;
 			left: 0;
