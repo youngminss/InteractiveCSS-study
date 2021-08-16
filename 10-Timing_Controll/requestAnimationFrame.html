@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .btn {
+        font-size: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="btn">취소</button>
+    <script>
+      let timerId;
+      let count = 0;
+      function sample() {
+        if (count > 200) {
+          return;
+        }
+        count++;
+        console.log("짜쟌~~~");
+        timerId = requestAnimationFrame(sample);
+      }
+
+      sample();
+
+      document.querySelector(".btn").addEventListener("click", function () {
+        cancelAnimationFrame(timerId);
+      });
+
+      /**
+       * 💡 function requestAnimationFrame(callback: FrameRequestCallback): number
+       * - setInterval 같이 "반복"을 목적으로 사용한다.
+       * - (default) 1초안에 60번 반복을 기본 기능으로 한다.
+       * - 그나마 가장 최근에 Canvas 같은 곳에서도 많이쓰는 함수라고 하니, 잘 알아두자.
+       * - 외부에 변수하나 선언해놓고, 특정 조건에 맞을 때, 강제로 함수를 종료하는 방식으로도 사용한다.
+       *
+       * function cancelAnimationFrame(handle: number): void
+       * - requestAnimationFrame() 을 중지할 수 있다.
+       * */
+    </script>
+  </body>
+</html>

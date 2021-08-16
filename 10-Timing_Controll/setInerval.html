@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .btn {
+        font-size: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="btn">취소</button>
+    <script>
+      let timerId;
+
+      function sample() {
+        console.log("짜쟌~~~");
+      }
+
+      timerId = setInterval(sample, 1000 * 0.2);
+
+      document.querySelector(".btn").addEventListener("click", function () {
+        clearInterval(timerId);
+      });
+
+      /**
+       * 🔍 setInterval
+       * - "특정 시간마다 반복"하는 작업 주 목적으로 사용
+       * - clearInterval(timerId)
+       *   + setInterval 이 반환하는 Id 가 있다.
+       *   + 이 Id 를 clearInterval() 안에 인자로 넘기면, 해당 setInterval 은 취소된다.
+       * */
+    </script>
+  </body>
+</html>
