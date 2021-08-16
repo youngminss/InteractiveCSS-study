@@ -1,3 +1,9 @@
+/* 
+CSS Transform
+- 하드웨어 가속, 즉 GPU를 이용한 방식이라, 더욱 부드러움
+- reflow를 최소화할 수 있다. 
+*/
+
 .box-container {
   display: flex;
 }

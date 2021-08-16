@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Web</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/3-moveObject_Example.css" />
+  </head>
+  <body>
+    <div class="stage">
+      <div class="ilbuni a"></div>
+      <div class="ilbuni b"></div>
+      <div class="ilbuni c"></div>
+    </div>
+  </body>
+
+  <script>
+    /**
+     * 1️⃣ 이벤트 위임 (Event Delegation)
+     * - 동일한 아이템이 여러 개(극단적으로 아주 많이) 있을 때, 각각에 이벤트리스너를 달아주는 것은 "메모리낭비", 곧 성능에 좋지 않다.
+     * - 🔍 그렇지 않고, 만약 그 많은 아이템들을 감싸는 부모요소가 있다면, 그 부모요소에 이벤트리스너를 달고, "특정 아이템일 때마다 해당 리스너가 작동하도록 구현하면 훨씬 좋다."
+     * */
+    (function () {
+      const ilbunis = document.querySelectorAll(".ilbuni");
+      const stage = document.querySelector(".stage");
+
+      function clickHandler(e) {
+        // Element.classList.contains(클래스명) : 해당 Element에 클래스명이 존재하면 true, 아니면 false
+        if (e.target.classList.contains("ilbuni")) {
+          // 여기서 this -> stage(부모요소)
+          this.removeChild(e.target);
+        }
+      }
+
+      stage.addEventListener("click", clickHandler);
+    })();
+  </script>
+</html>
