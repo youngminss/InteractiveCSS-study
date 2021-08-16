@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Interactive Web</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <style>
+      body {
+        height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .menu {
+        display: flex;
+        width: 70vw;
+        height: 20vh;
+        justify-content: space-evenly;
+        align-items: center;
+        background: lightgray;
+        border-radius: 10px;
+      }
+      .menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 150px;
+        height: 80px;
+        border: 5px solid white;
+        border-radius: 20px;
+        outline: 0;
+        font: 900 1.2rem NotoSans;
+        background: linear-gradient(0deg, rgba(233, 210, 0, 1) 0%, rgba(255, 240, 0, 1) 24%, rgba(255, 240, 0, 1) 70%, rgba(255, 255, 255, 1) 100%);
+        cursor: pointer;
+      }
+      .icon {
+        width: 60px;
+        /* CSS로 특정선택자 요소에 이벤트 무력화, 각 아이템마다 해줘야함 */
+        /* pointer-events: none; */
+      }
+      .btn-label {
+        text-shadow: rgba(255, 255, 255, 1) 0 1px 0;
+        /* CSS로 특정선택자 요소에 이벤트 무력화, 각 아이템마다 해줘야함 */
+        /* pointer-events: none; */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="menu">
+      <button class="menu-btn" data-value="1">
+        <img src="./images/ilbuni_1.png" alt="" class="icon" />
+        <span class="btn-label">일분이 1</span>
+      </button>
+      <button class="menu-btn" data-value="2">
+        <img src="./images/ilbuni_2.png" alt="" class="icon" />
+        <span class="btn-label">일분이 2</span>
+      </button>
+      <button class="menu-btn" data-value="3">
+        <img src="./images/ilbuni_3.png" alt="" class="icon" />
+        <span class="btn-label">일분이 3</span>
+      </button>
+    </div>
+
+    <script>
+      /**
+       * 1️⃣ 이벤트 위임 보강
+       * - 부모요소에 내부에 자식요소들이 좀 있는 상황
+       * - 부모요소영역을 클릭하는데, 더욱 자세히는 자식요소 영역을 눌렀을때, 자식요소가 아닌, 그럼에도 부모요소를 선택한 것으로 취급하려면
+       * - 1. CSS : pointer-events: none;
+       * - 2. JS : 반복문으로 DOM Tree 를 타고가는 방식(단, body 이상가면 -> 없는 것임, 종료)
+       *
+       * ❓ CSS, JS 방식 중에 무엇을 써야 하나 ?
+       * - 언뜻 보기엔 CSS 방식이 간편해보이나, CSS방식은 point-events: none 한 요소에 하위요소들마저 event 전파가 일어나지 않으므로
+       * - 만약 자식요소 내부에 또 다른 자식요소에 event 가 전파되어야하는 상황이 필요할 경우, 수정이 안됌
+       * - 반면, JS 방식은 단순히, "정적으로 lock" 을 거는 것이 아니라, 함수 내에서 "일시적으로 조건에 따라" lock 을 거는 거여서 CSS 같은 문제는 없다.
+       * - 각 상황에 맞게 판단해서 사용해야한다.
+       *
+       *
+       * 🔍 이벤트 위임 장점
+       * - "동적으로" script 상에서 생성하여, 특정 부모요소 내부에 붙여줘야하는 상황에
+       * - 각 아이템들에게 동일한 event 가 있을 경우, 기존에 존재하던, 최상위 부모에게만 event 를 걸어놓고
+       * - event.target 을 통해, 자식요소들에게도 동일한 이벤트리스너를 작동하게 해주면, 얼마나 좋아
+       * - 이게 아니면, 각각에 동적으로 생성되는, element 에 대해, html 에 추가하기전에 이벤트리스터를 각각 달아주고 추가해줘야해서 귀찮
+       *
+       * 💡 이벤트 위임(event delegation) 에 대해서는 사실
+       * - 이벤트 버블링(bubbling)
+       * - 이번트 캡처링(capturing)
+       * - 이벤트 위임(delegation)
+       * - 이벤트 전파(propagation)
+       * 같은 서로 엮인 개념들이 있는데, 이 부분은 따로 포스팅할 것
+       * */
+
+      const menu = document.querySelector(".menu");
+
+      function clickHandler(e) {
+        // e.target.getAttribute('data-이름') == e.target.dataset.이름
+        // console.log(e.target.dataset.value);
+
+        // 부모요소의, 어떤 Element 에 이벤트가 들어왔던, 일단 가져온다.
+        let elem = e.target;
+        // 우리가 찾는 class 이름으로 하는 요소일때까지, 부모를 타고 올라간다.
+        while (!elem.classList.contains("menu-btn")) {
+          elem = elem.parentNode;
+
+          // 단, 만약 시작이, 찾는 타겟 노드보다 상위에 있는 요소부터 시작이면, 절대 못찾음, 그럼 결구 BODY 객체까지 갈텐데 그러면, 함수종료
+          if (elem.nodeName === "BODY") {
+            elem = null;
+            return;
+          }
+        }
+        // 찾았으면, 그 박스에는 dataset 속성 있을테니, 그 값 출력
+        console.log(elem.dataset.value);
+      }
+
+      menu.addEventListener("click", clickHandler);
+    </script>
+  </body>
+</html>
