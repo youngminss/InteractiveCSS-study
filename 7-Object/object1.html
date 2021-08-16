@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Object</title>
+    <title>Object 1</title>
   </head>
   <body>
     <h1>Obect</h1>
@@ -36,18 +36,19 @@
        * - 객체안에 함수들 = "행동을 의미", '메서드(Method)' 라고함
        *
        */
-      // function Person(name, age) {
-      //   this.name = name;
-      //   this.age = age;
-      //   this.introduce = function () {
-      //     console.log(`안녕하세요 저는 ${this.name} 입니다. 나이는 ${this.age} 입니다.`);
-      //   };
-      // }
+      function Person(name, age) {
+        this.name = name;
+        this.age = age;
+        this.introduce = function () {
+          console.log(`안녕하세요 저는 ${this.name} 입니다. 나이는 ${this.age} 입니다.`);
+        };
+      }
 
-      // const person1 = new Person("일분이", 100);
-      // const person2 = new Person("이분이", 200);
-      // person1.introduce();
-      // person2.introduce();
+      const person1 = new Person("일분이", 100);
+      const person2 = new Person("이분이", 200);
+      person1.introduce();
+      person2.introduce();
+      console.log(person1);
 
       // Best 👍
       /**
@@ -57,21 +58,22 @@
        * - 클래스에서 생성자는 일반적으로 "멤버변수 초기화에 사용"
        * - 클래스를 정의하고, 외부에서 new 키워드를 통해, 앞선 생성자로 객체를 반환하는 것과 같은 원리
        * */
-      class Person {
-        // name;
-        // age;
-        constructor(name, age) {
-          this.name = name;
-          this.age = age;
-        }
-        introduce() {
-          console.log(`안녕하세요 저는 ${this.name} 입니다. 나이는 ${this.age} 입니다.`);
-        }
-      }
-      const person1 = new Person("일분이", 100);
-      const person2 = new Person("이분이", 200);
-      person1.introduce();
-      person2.introduce();
+      // class Person {
+      //   // name;
+      //   // age;
+      //   constructor(name, age) {
+      //     this.name = name;
+      //     this.age = age;
+      //   }
+      //   introduce() {
+      //     console.log(`안녕하세요 저는 ${this.name} 입니다. 나이는 ${this.age} 입니다.`);
+      //   }
+      // }
+      // const person1 = new Person("일분이", 100);
+      // const person2 = new Person("이분이", 200);
+      // person1.introduce();
+      // person2.introduce();
+      // console.log(person1);
     </script>
   </body>
 </html>

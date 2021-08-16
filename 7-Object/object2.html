@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Object 2</title>
+    <style>
+      .card {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 100px;
+        height: 150px;
+        font-size: 2rem;
+        font-weight: 900;
+        border: 2px solid black;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      function Person(name, age) {
+        this.name = name;
+        this.age = age;
+        // 💩 동일한 기능일 뿐인데, 각 객체마다 이 함수를 가지고 있음 => 메모리 낭비
+        // this.introduce = function () {
+        //   console.log(`안녕하세요 저는 ${this.name} 입니다. 나이는 ${this.age} 입니다.`);
+        // };
+      }
+
+      // 💡 독립성이 필요없는 객체의 속성이나 메소드는 "전역적으로 하나만" 두고, "공유"해서 사용
+      // - 결과적으로, "메모리 절약"을 하기 위함.
+      Person.prototype.introduce = function () {
+        console.log(`안녕하세요 저는 ${this.name} 입니다. 나이는 ${this.age} 입니다.`);
+      };
+
+      const person1 = new Person("일분이", 100);
+      const person2 = new Person("이분이", 200);
+      person1.introduce();
+      person2.introduce();
+      console.log(person1);
+
+      // ============ 절취선 ==============
+
+      // 🚀 동적으로 "객체" 생성자로 Card Compoent 생성하기
+      function Card(num, color) {
+        this.num = num;
+        this.color = color;
+        this.init();
+      }
+
+      // 객체의 prototype 을 여러개 한번에 작성하고 싶다면, prototype 도 결국 객체라, 객체 초기화 형태로 하면 된다.
+      // 💡 단, "초기화" 개념이어서 맨 처음에  "생성자로 어떤 객체에 대한 prototype 인지를 재정의" 해둬야 한다.
+      Card.prototype = {
+        constructor: Card,
+        init: function () {
+          const cardElem = document.createElement("div");
+          cardElem.style.color = this.color;
+          cardElem.innerHTML = this.num;
+          cardElem.classList.add("card");
+          document.body.appendChild(cardElem);
+        },
+      };
+
+      new Card("1", "green");
+      new Card("2", "red");
+    </script>
+  </body>
+</html>
