@@ -27,6 +27,7 @@ a {
 }
 .local-nav {
   height: 52px;
+  border-bottom: 1px solid #ddd;
 }
 .global-nav-links,
 .local-nav-links {
