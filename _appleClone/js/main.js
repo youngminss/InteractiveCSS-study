@@ -14,6 +14,13 @@
       scrollHeight: 0,
       objs: {
         container: document.querySelector("#scroll-section-0"),
+        messageA: document.querySelector("#scroll-section-0 .main-message.a"),
+        messageB: document.querySelector("#scroll-section-0 .main-message.b"),
+        messageC: document.querySelector("#scroll-section-0 .main-message.c"),
+        messageD: document.querySelector("#scroll-section-0 .main-message.d"),
+      },
+      values: {
+        messageA_opacity: [0, 1],
       },
     },
     {
@@ -63,6 +70,30 @@
     }
     document.body.setAttribute("id", `show-scene-${currentScene}`);
   }
+
+  function playAnimation() {
+    const objs = sceneInfo[currentScene].objs;
+    const values = sceneInfo[currentScene].values;
+    const currentYOffset = yOffset - prevScrollHeight; // 매 순간, 현재 Scene 에서의 Top 으로부터 얼마나 스크롤 되었는지 구하기
+
+    console.log(currentScene, currentYOffset);
+
+    switch (currentScene) {
+      case 0:
+        // console.log("0 play");
+        break;
+      case 1:
+        // console.log("1 play");
+        break;
+      case 2:
+        // console.log("2 play");
+        break;
+      case 3:
+        // console.log("3 play");
+        break;
+    }
+  }
+
   function scrollLoop() {
     prevScrollHeight = 0;
     for (let i = 0; i < currentScene; i++) {
@@ -77,6 +108,8 @@
       currentScene--;
       document.body.setAttribute("id", `show-scene-${currentScene}`);
     }
+
+    playAnimation();
   }
 
   window.addEventListener("scroll", () => {
