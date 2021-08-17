@@ -1,0 +1,30 @@
+@charset 'utf-8';
+
+/* 프로젝트 초기 셋 설정 */
+html {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+}
+body {
+  overflow-x: hidden;
+  color: rgb(29, 29, 31);
+  letter-spacing: -0.05em; /* 글자간 간격 */
+  background: white;
+}
+p {
+  line-height: 1.6; /* 문단 행간 간격 */
+}
+
+/* 본격적인 디자인 */
+.global-nav {
+  max-width: 1000px;
+  height: 44px;
+  margin: 0 auto;
+}
+
+.global-nav-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
