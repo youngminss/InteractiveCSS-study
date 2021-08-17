@@ -52,6 +52,7 @@
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
   let currentScene = 0; // 현재 활성화된 씬(scroll-section)
+  let enterNewScene = false; // Scene 이 바뀌는 찰나의 순간, "버그 발생시킬 수 있는 값" 제어하기 위한 변수
 
   function setLayout() {
     sceneInfo.forEach((scene) => {
@@ -85,6 +86,7 @@
     const values = sceneInfo[currentScene].values;
     const currentYOffset = yOffset - prevScrollHeight; // 매 순간, 현재 Scene 에서의 Top 으로부터 얼마나 스크롤 되었는지 구하기
 
+    console.log(currentScene, currentYOffset);
     switch (currentScene) {
       case 0:
         let messageA_opacity_in = calcValues(values.messageA_opacity, currentYOffset);
@@ -103,6 +105,7 @@
   }
 
   function scrollLoop() {
+    enterNewScene = false;
     prevScrollHeight = 0;
     for (let i = 0; i < currentScene; i++) {
       prevScrollHeight += sceneInfo[i].scrollHeight;
@@ -110,12 +113,17 @@
 
     if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
       currentScene++;
+      enterNewScene = true;
       document.body.setAttribute("id", `show-scene-${currentScene}`);
     }
     if (yOffset < prevScrollHeight) {
       currentScene--;
+      if (currentScene === 0) return; // safari 같은 브라우저에서의, 브라우저 바운스 효과로 인한 마이너스(-)값 방지
+      enterNewScene = true;
       document.body.setAttribute("id", `show-scene-${currentScene}`);
     }
+
+    if (enterNewScene) return;
 
     playAnimation();
   }
