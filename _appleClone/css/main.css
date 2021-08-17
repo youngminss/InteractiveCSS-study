@@ -14,17 +14,43 @@ body {
 p {
   line-height: 1.6; /* 문단 행간 간격 */
 }
-
-/* 본격적인 디자인 */
-.global-nav {
-  max-width: 1000px;
-  height: 44px;
-  margin: 0 auto;
+a {
+  text-decoration: none;
+  color: rgb(29, 29, 31);
 }
 
-.global-nav-links {
+/* 본격적인 디자인 */
+
+/* 🔵 global & Local Nav Layout, Design */
+.global-nav {
+  height: 44px;
+}
+.local-nav {
+  height: 52px;
+}
+.global-nav-links,
+.local-nav-links {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  max-width: 1000px;
   height: 100%;
+  margin: 0 auto;
+}
+.global-nav-links {
+  justify-content: space-between;
+}
+
+/* 같은 부모 내에, 특정 요소만 다른 CSS(현재, font-size)적용 시, CSS 우선순위 고려할 것 */
+.local-nav-links a {
+  font-size: 0.8em;
+}
+.local-nav-links .product-name {
+  margin-right: auto;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* 🔍 선택자:not(제외할 것) = 제외할 것을 제외한 나머지만 적용 */
+.local-nav-links a:not(.product-name) {
+  margin-left: 2em;
 }
