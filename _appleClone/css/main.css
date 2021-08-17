@@ -24,9 +24,11 @@ a {
 /* 🔵 global & Local Nav Layout, Design */
 .global-nav {
   height: 44px;
+  padding: 0 1rem;
 }
 .local-nav {
   height: 52px;
+  padding: 0 1rem;
   border-bottom: 1px solid #ddd;
 }
 .global-nav-links,
@@ -54,4 +56,145 @@ a {
 /* 🔍 선택자:not(제외할 것) = 제외할 것을 제외한 나머지만 적용 */
 .local-nav-links a:not(.product-name) {
   margin-left: 2em;
+}
+
+/* 🔵 section Disign */
+.scroll-section {
+  padding-top: 50vh;
+}
+
+/* 
+🔍 View 구현을 할때, "Mobile First" 냐 "Desktop First" 냐는 선택의 문제
+작은 화면 -> 큰 화면으로 잡아가는 것을 보편적으로 좋다고 한다. 
+*/
+
+/* 📱 Mobile */
+/* 🔴 section 0 */
+#scroll-section-0 h1 {
+  font-size: 4rem;
+  text-align: center;
+}
+
+.main-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0;
+  height: 3em;
+  font-size: 2.5rem;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.main-message p {
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* 🔴 section 1 */
+.description {
+  font-size: 1.2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  padding: 0 1rem;
+  color: #888;
+}
+/* 
+🔍 rem, em 리마인드
+- rem : root(html) 폰트사이즈에 대한 비율
+- em : 현재 정의하고 있는 CSS 요소에 대한 폰트사이즈 기준 비율
+*/
+.description strong {
+  float: left;
+  margin-right: 0.2em;
+  font-size: 3rem;
+  color: rgb(29, 29, 31);
+}
+
+/* 🔴 section 2 */
+.main-message small {
+  display: block;
+  margin-bottom: 0.5em;
+  font-size: 1.3rem;
+}
+#scroll-section-2 .main-message {
+  font-size: 3.5rem;
+}
+.desc-message {
+  width: 50%;
+  font-weight: bold;
+}
+.pin {
+  width: 1px;
+  height: 100px;
+  background: rgb(29, 29, 31);
+}
+
+/* 🔴 section 3 */
+.mid-message {
+  max-width: 1000px;
+  margin: 0 auto;
+
+  padding: 0 1rem;
+  font-size: 2rem;
+  color: #888;
+}
+.mid-message strong {
+  color: rgb(29, 29, 31);
+}
+.canvas-caption {
+  max-width: 1000px;
+  margin: 0 auto;
+
+  padding: 0 1rem;
+  font-size: 1.2rem;
+  color: #888;
+}
+
+/* 🔵 footer */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 7rem;
+  background: darkorange;
+}
+
+/* 💻 Desktop */
+@media (min-width: 1024px) {
+  /* 🔴 section 0 */
+  #scroll-section-0 h1 {
+    font-size: 9vw;
+  }
+  .main-message {
+    font-size: 4vw;
+  }
+
+  /* 🔴 section 1 */
+  .description {
+    font-size: 2rem;
+  }
+  .description strong {
+    font-size: 6rem;
+  }
+
+  /* 🔴 section 2 */
+  #scroll-section-2 .main-message {
+    font-size: 6vw;
+  }
+  .main-message small {
+    font-size: 2vw;
+  }
+  .desc-message {
+    width: 20%;
+  }
+
+  /* 🔴 section 3 */
+  .mid-message {
+    font-size: 4vw;
+  }
+  .canvas-caption {
+    font-size: 2rem;
+  }
 }
