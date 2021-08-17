@@ -23,10 +23,20 @@ a {
 
 /* 🔵 global & Local Nav Layout, Design */
 .global-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
   height: 44px;
   padding: 0 1rem;
 }
 .local-nav {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  width: 100%;
+
   height: 52px;
   padding: 0 1rem;
   border-bottom: 1px solid #ddd;
@@ -61,6 +71,7 @@ a {
 /* 🔵 section Disign */
 .scroll-section {
   padding-top: 50vh;
+  border: 2px solid red;
 }
 
 /* 
