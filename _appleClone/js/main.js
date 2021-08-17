@@ -6,6 +6,7 @@
    * - 2️⃣ scrollHeight : 각 Scene 에 전체 높이(default = 0, 왜냐하면, 특정 높이로 초기설정하면 -> 디바이스 크기가 다르다면 ?)
    * - 3️⃣ type : 각 Scene 이 Scroll 애니메이션이 들어가 있다면(sticky), 아니면(normal)
    * - 4️⃣ objs : 각 Scene 을 의미하는 section DOM 객체
+   * - 5️⃣ values : 각 Scene 의 Sticky Item 들의 Animation 범위 값들
    */
   const sceneInfo = [
     {
@@ -71,25 +72,32 @@
     document.body.setAttribute("id", `show-scene-${currentScene}`);
   }
 
+  function calcValues(values, currentYOffset) {
+    // scrollRatio = 현재 Scene 에서 스크롤된 "비율"을 구하기
+    let scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight;
+    let rv = scrollRatio * (values[1] - values[0]) + values[0];
+
+    return rv;
+  }
+
   function playAnimation() {
     const objs = sceneInfo[currentScene].objs;
     const values = sceneInfo[currentScene].values;
     const currentYOffset = yOffset - prevScrollHeight; // 매 순간, 현재 Scene 에서의 Top 으로부터 얼마나 스크롤 되었는지 구하기
 
-    console.log(currentScene, currentYOffset);
-
     switch (currentScene) {
       case 0:
-        // console.log("0 play");
+        let messageA_opacity_in = calcValues(values.messageA_opacity, currentYOffset);
+        objs.messageA.style.opacity = messageA_opacity_in;
         break;
       case 1:
-        // console.log("1 play");
+        // let messageA_opacity_in = calcValues(values.messageA_opacity, currentYOffset);
         break;
       case 2:
-        // console.log("2 play");
+        // let messageA_opacity_in = calcValues(values.messageA_opacity, currentYOffset);
         break;
       case 3:
-        // console.log("3 play");
+        // let messageA_opacity_in = calcValues(values.messageA_opacity, currentYOffset);
         break;
     }
   }
