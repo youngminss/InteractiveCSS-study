@@ -161,6 +161,25 @@ a {
   background: darkorange;
 }
 
+/* 🔍 sticky Elements */
+/* 
+	💡 position: fixed = 지정한 위치에 고정
+	💡 position: sticky = 평소에는 static, 특정 조건하에 고정
+*/
+.sticky-elem {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#show-scene-0 #scroll-section-0 .sticky-elem,
+#show-scene-1 #scroll-section-1 .sticky-elem,
+#show-scene-2 #scroll-section-2 .sticky-elem,
+#show-scene-3 #scroll-section-3 .sticky-elem {
+  display: block;
+}
+
 /* 💻 Desktop */
 @media (min-width: 1024px) {
   /* 🔴 section 0 */
