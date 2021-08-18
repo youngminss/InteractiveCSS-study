@@ -143,6 +143,14 @@
       }
     }
     document.body.setAttribute("id", `show-scene-${currentScene}`);
+
+    /**
+     * 💡 창 크기에 맞게 Canvas 배경도 사이즈를 알맞게 맞춰지도록 하는 방법은 크게 2가지
+     * - JS로 Canvas 태크 자체에 접근, width와  height 를 변경하는 법
+     * - 👍 CSS transform: scale, translate 사용
+     * */
+    const heightRatio = window.innerHeight / 1080; // 1080 으로 나눈 것은 Canvas 를 Height 비율로 창 사이즈에 맞추려는 의도
+    sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
 
   function calcValues(values, currentYOffset) {
@@ -180,9 +188,11 @@
 
     switch (currentScene) {
       case 0:
+        // 📍 Scene 1 캔버스 비디오(이미지s) 처리
         let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
         objs.context.drawImage(objs.videoImages[sequence], 0, 0);
 
+        // 📍 Scene 1 캔버스 제외 Sticky Eleme 처리
         if (scrollRatio <= 0.22) {
           // in
           objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);

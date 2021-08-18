@@ -73,7 +73,6 @@ a {
 /* 🔵 section Disign */
 .scroll-section {
   padding-top: 50vh;
-  border: 2px solid red;
 }
 
 /* 
@@ -198,7 +197,12 @@ a {
 /* 🔵 canvas */
 .sticky-elem-canvas {
   top: 0;
-  background: #888;
+  height: 100%;
+}
+.sticky-elem-canvas canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
 #show-scene-0 #scroll-section-0 .sticky-elem,
