@@ -69,6 +69,8 @@
         pinB: document.querySelector("#scroll-section-2 .b .pin"),
         pinC: document.querySelector("#scroll-section-2 .c .pin"),
 
+        canvas: document.querySelector("#video-canvas-1"),
+        context: document.querySelector("#video-canvas-1").getContext("2d"),
         videoImages: [],
       },
       values: {
@@ -117,7 +119,13 @@
       imgElem.src = `./video/001/IMG_${6726 + i}.JPG`;
       sceneInfo[0].objs.videoImages.push(imgElem);
     }
-    console.log(sceneInfo[0].objs.videoImages);
+
+    let imgElem2;
+    for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
+      imgElem2 = new Image();
+      imgElem2.src = `./video/002/IMG_${7027 + i}.JPG`;
+      sceneInfo[2].objs.videoImages.push(imgElem2);
+    }
   }
   setCanvasImages();
 
@@ -151,6 +159,7 @@
      * */
     const heightRatio = window.innerHeight / 1080; // 1080 으로 나눈 것은 Canvas 를 Height 비율로 창 사이즈에 맞추려는 의도
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
+    sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
 
   function calcValues(values, currentYOffset) {
@@ -192,6 +201,7 @@
         let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
         objs.context.drawImage(objs.videoImages[sequence], 0, 0);
 
+        objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
         // 📍 Scene 1 캔버스 제외 Sticky Eleme 처리
         if (scrollRatio <= 0.22) {
           // in
@@ -234,6 +244,15 @@
         }
         break;
       case 2:
+        let sequence2 = Math.round(calcValues(values.imageSequence, currentYOffset));
+        objs.context.drawImage(objs.videoImages[sequence2], 0, 0);
+
+        if (scrollRatio <= 0.5) {
+          objs.canvas.style.opacity = calcValues(values.canvas_opacity_in, currentYOffset);
+        } else {
+          objs.canvas.style.opacity = calcValues(values.canvas_opacity_out, currentYOffset);
+        }
+
         if (scrollRatio <= 0.32) {
           // in
           objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
@@ -281,14 +300,14 @@
     }
 
     if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
-      currentScene++;
       enterNewScene = true;
+      currentScene++;
       document.body.setAttribute("id", `show-scene-${currentScene}`);
     }
     if (yOffset < prevScrollHeight) {
-      currentScene--;
-      if (currentScene === 0) return; // safari 같은 브라우저에서의, 브라우저 바운스 효과로 인한 마이너스(-)값 방지
       enterNewScene = true;
+      if (currentScene === 0) return; // safari 같은 브라우저에서의, 브라우저 바운스 효과로 인한 마이너스(-)값 방지
+      currentScene--;
       document.body.setAttribute("id", `show-scene-${currentScene}`);
     }
 
@@ -301,6 +320,9 @@
     yOffset = window.pageYOffset;
     scrollLoop();
   });
-  window.addEventListener("load", setLayout);
+  window.addEventListener("load", () => {
+    setLayout();
+    sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+  });
   window.addEventListener("resize", setLayout);
 })();
