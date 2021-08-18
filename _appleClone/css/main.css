@@ -93,7 +93,7 @@ a {
   margin: 5px 0;
   height: 3em;
   font-size: 2.5rem;
-
+  top: 35vh;
   opacity: 0;
 }
 
@@ -181,8 +181,8 @@ a {
 .sticky-elem {
   display: none;
   position: fixed;
-  top: 0;
   left: 0;
+  width: 100%;
 }
 
 #show-scene-0 #scroll-section-0 .sticky-elem,
