@@ -30,12 +30,14 @@ a {
 
   height: 44px;
   padding: 0 1rem;
+  z-index: 10;
 }
 .local-nav {
   position: absolute;
   top: 45px;
   left: 0;
   width: 100%;
+  z-index: 11;
 
   height: 52px;
   padding: 0 1rem;
@@ -191,6 +193,12 @@ a {
   position: fixed;
   left: 0;
   width: 100%;
+}
+
+/* 🔵 canvas */
+.sticky-elem-canvas {
+  top: 0;
+  background: #888;
 }
 
 #show-scene-0 #scroll-section-0 .sticky-elem,
