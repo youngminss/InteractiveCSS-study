@@ -542,10 +542,16 @@
     }
   });
   window.addEventListener("load", () => {
+    document.body.classList.remove("before-load"); // loading svg 클래스 만! 제거
+
     setLayout();
     sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
   });
 
+  // 프로젝트 Load 가 다된 시점(transitionend)에 이벤트 발생
+  document.querySelector(".loading").addEventListener("transitionend", (e) => {
+    document.body.removeChild(e.currentTarget); // 화살표 함수 -> this 사용 못함, event 객체의 currentTarget 사용
+  });
   // 모바일 폰 이상에서
   window.addEventListener("resize", () => {
     if (window.innerHeight > 900) {
