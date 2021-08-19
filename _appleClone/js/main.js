@@ -436,6 +436,14 @@
             values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2;
 
             objs.canvas.style.transform = `scale(${calcValues(values.canvas_scale, currentYOffset)})`;
+
+            objs.canvas.style.marginTop = 0; // sticky -> static 후, 다시 스크롤 올렸을 때, maring 설정 풀기
+          }
+
+          // Scale down 다 끝나고, sticky -> static 으로
+          if (scrollRatio > values.canvas_scale[2].end && values.canvas_scale[2].end > 0) {
+            objs.canvas.classList.remove("sticky");
+            objs.canvas.style.marginTop = `${scrollHeight * 0.4}px`;
           }
         }
         break;
