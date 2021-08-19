@@ -128,6 +128,12 @@
   let currentScene = 0; // 현재 활성화된 씬(scroll-section)
   let enterNewScene = false; // Scene 이 바뀌는 찰나의 순간, "버그 발생시킬 수 있는 값" 제어하기 위한 변수
 
+  // 🎩 아래 4개의 변수들은, 부드러운 감속 스크롤 애니메이션에 사용할 변수들
+  let acc = 0.1;
+  let delayedYOffset = 0;
+  let rafId;
+  let rafState;
+
   // Canvas 에 필요한, Image Frams 받아오기(초기화)
   function setCanvasImages() {
     let imgElem;
@@ -230,8 +236,8 @@
     switch (currentScene) {
       case 0:
         // 📍 Scene 1 캔버스 비디오(이미지s) 처리
-        let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
-        objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+        // let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
+        // objs.context.drawImage(objs.videoImages[sequence], 0, 0);
 
         objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
         // 📍 Scene 1 캔버스 제외 Sticky Eleme 처리
@@ -475,12 +481,12 @@
       prevScrollHeight += sceneInfo[i].scrollHeight;
     }
 
-    if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+    if (delayedYOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
       enterNewScene = true;
       currentScene++;
       document.body.setAttribute("id", `show-scene-${currentScene}`);
     }
-    if (yOffset < prevScrollHeight) {
+    if (delayedYOffset < prevScrollHeight) {
       enterNewScene = true;
       if (currentScene === 0) return; // safari 같은 브라우저에서의, 브라우저 바운스 효과로 인한 마이너스(-)값 방지
       currentScene--;
@@ -492,10 +498,47 @@
     playAnimation();
   }
 
+  function loop() {
+    // 💡 cubic-bezier 같은 스크롤 계산법
+    // - 뭔가, 부드러운 스크롤 처리할 때, 엄청 많이 씀
+    // - 특히, 지금같이, 스크롤에 따른, Canvas 애니메이션 작업같은 곳에
+    delayedYOffset = delayedYOffset + (yOffset - delayedYOffset) * acc;
+
+    // 잔 버그 방지
+    // - 새로운 Scene 전환 할때, 그 찰나의 순간 예방
+    // - Scen
+    if (!enterNewScene) {
+      if (currentScene === 0 || currentScene === 2) {
+        const currentYOffset = delayedYOffset - prevScrollHeight;
+        const objs = sceneInfo[currentScene].objs;
+        const values = sceneInfo[currentScene].values;
+
+        let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
+        if (objs.videoImages[sequence]) {
+          objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+        }
+      }
+    }
+
+    rafId = requestAnimationFrame(loop);
+
+    // abs(절대값)을 사용 < 1 은 목표 스크롤 위치와, 초속 60번으로 분할한 그 갭에 "절대값"이 1 이하(즉, 1px 정도, 육안으로 거의 식별불가)
+    // 절댓값은, 순간적으로 delayedYOffset 이 "음수"가 될 수 있음 방지
+    if (Math.abs(yOffset - delayedYOffset) < 1) {
+      cancelAnimationFrame(rafId);
+      rafState = false;
+    }
+  }
+
   window.addEventListener("scroll", () => {
     yOffset = window.pageYOffset;
     scrollLoop();
     checkMenu();
+
+    if (!rafState) {
+      rafId = requestAnimationFrame(loop);
+      rafState = true;
+    }
   });
   window.addEventListener("load", () => {
     setLayout();
