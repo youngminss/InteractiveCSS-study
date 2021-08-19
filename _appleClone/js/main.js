@@ -157,7 +157,6 @@
       sceneInfo[3].objs.images.push(imgElem3);
     }
   }
-  setCanvasImages();
 
   function checkMenu() {
     if (yOffset > 44) {
@@ -283,7 +282,9 @@
         break;
       case 2:
         let sequence2 = Math.round(calcValues(values.imageSequence, currentYOffset));
-        objs.context.drawImage(objs.videoImages[sequence2], 0, 0);
+        if (objs.videoImages[sequence2]) {
+          objs.context.drawImage(objs.videoImages[sequence2], 0, 0);
+        }
 
         if (scrollRatio <= 0.5) {
           objs.canvas.style.opacity = calcValues(values.canvas_opacity_in, currentYOffset);
@@ -544,5 +545,16 @@
     setLayout();
     sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
   });
-  window.addEventListener("resize", setLayout);
+
+  // 모바일 폰 이상에서
+  window.addEventListener("resize", () => {
+    if (window.innerHeight > 900) {
+      setLayout();
+      sceneInfo[3].values.rectStartY = 0;
+    }
+  });
+
+  // 폰의 경우, 폰을 가로 or 세로로 변경하는 경우
+  window.addEventListener("orientationchange", setLayout);
+  setCanvasImages();
 })();
