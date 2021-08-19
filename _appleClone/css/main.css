@@ -72,7 +72,7 @@ a {
 
 /* 🔵 section Disign */
 .scroll-section {
-  position: relative;
+  position: relative; /* Scene 4 의 offsetTop 값을 위해 */
   padding-top: 50vh;
 }
 
@@ -209,7 +209,9 @@ a {
   top: 50%;
   left: 50%;
 }
-.image-blend-canvas {
+.image-blend-canvas.sticky {
+  position: fixed;
+  top: 0;
 }
 #scroll-section-3 {
   display: flex;

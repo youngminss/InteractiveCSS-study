@@ -305,8 +305,39 @@
           objs.messageC.style.opacity = calcValues(values.messageC_opacity_out, currentYOffset);
           objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
         }
+
+        // 👇 다음 Scene 4 에 Canvas 갑툭튀 방지하기 위해, Scene 3 끝나는 시점에서 preload
+        if (scrollRatio > 0.9) {
+          const objs = sceneInfo[3].objs;
+          const values = sceneInfo[3].values;
+          const widthRatio = window.innerWidth / objs.canvas.width;
+          const heightRatio = window.innerHeight / objs.canvas.height;
+          let canvasScaleRatio;
+
+          if (widthRatio <= heightRatio) {
+            canvasScaleRatio = heightRatio;
+          } else {
+            canvasScaleRatio = widthRatio;
+          }
+          objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
+          objs.context.fillStyle = "white";
+          objs.context.drawImage(objs.images[0], 0, 0);
+
+          const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
+          const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
+
+          const whiteRectWidth = recalculatedInnerWidth * 0.15;
+          values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
+          values.rect1X[1] = values.rect1X[0] - whiteRectWidth;
+          values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth;
+          values.rect2X[1] = values.rect2X[0] + whiteRectWidth;
+
+          objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), recalculatedInnerHeight);
+          objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth), recalculatedInnerHeight);
+        }
         break;
       case 3:
+        let step = 0;
         // 가로:세로 모두 꽉 차게 하기 여기서 세팅(계산필요)
         const widthRatio = window.innerWidth / objs.canvas.width;
         const heightRatio = window.innerHeight / objs.canvas.height;
@@ -334,12 +365,17 @@
           // values.rectStartY = objs.canvas.getBoundingClientRect().top;
 
           // 💡 결국, 절대적은 위치를 찾는데, Element.offsetTop 을 이용할 것인데, 중요한점
+          // - 아무설정없이 offsetTop 값을 사용하면, "브라우저 맨위부터 해당 요소 시작점"까지의 높이가 가져와진다.
+          // - 이전 Section 의 높이를 뺀 현재 Section 높이만 가져오기 위해, 이전 prevScrollHeight 과의 연산을 통해 가져올 수도 있겟지만
+          // - 각 Section 에 대한 relative 속성를 주면, 바로 offsetTop 값을 사용해도, 정상적인 해당 Section 의 top 값을 가져올 수 있다.
           // - Canvas 가 현재 Scale 되어 있는데, Scale 은 초기에 설정된 크기 정보랑은 독립된 크기이다.
           // - 고로, 조정된 Scale 크기의 영역을 뺀, 나머지 높이 부분의 / 2 한 값을, 적용해야 정확하다.
           values.rectStartY = objs.canvas.offsetTop + (objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2;
-          console.log(values.rectStartY);
+
+          // 첫번째 일분이 이미지 Scale 인터렉션 시작 시점 조정
           values.rect1X[2].start = window.innerHeight / 2 / scrollHeight;
           values.rect2X[2].start = window.innerHeight / 2 / scrollHeight;
+          // 첫번째 일분이 이미지 Scale 인터렉션 종료 시점
           values.rect1X[2].end = values.rectStartY / scrollHeight;
           values.rect2X[2].end = values.rectStartY / scrollHeight;
         }
@@ -357,7 +393,15 @@
 
         objs.context.fillRect(calcValues(values.rect1X, currentYOffset), 0, parseInt(whiteRectWidth), recalculatedInnerHeight);
         objs.context.fillRect(calcValues(values.rect2X, currentYOffset), 0, parseInt(whiteRectWidth), recalculatedInnerHeight);
-        2;
+
+        if (scrollRatio < values.rect1X[2].end) {
+          step = 1;
+          objs.canvas.classList.remove("sticky");
+        } else {
+          step = 2;
+          objs.canvas.classList.add("sticky");
+          objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
+        }
         break;
     }
   }
