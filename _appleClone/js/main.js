@@ -111,10 +111,11 @@
       },
       values: {
         // 창 변화에 따라 양옆 흰색 Rect 크기에 대한 비율과, 스크롤 애니메이션 구간이 달라질 수 있다.
-        // 동적으로 구해야함
+        // 이 안에 값들은 전부, 동적으로 구해야함
         rect1X: [0, 0, { start: 0, end: 0 }],
         rect2X: [0, 0, { start: 0, end: 0 }],
         blendHeight: [0, 0, { start: 0, end: 0 }],
+        canvas_scale: [0, 0, { start: 0, end: 0 }],
         rectStartY: 0, // Scene 4 Section 으로 부터 Canvas 시작 까지의 height (불변)
       },
     },
@@ -425,6 +426,17 @@
 
           objs.canvas.classList.add("sticky");
           objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
+
+          // 블랜딩 이미지 끝나고 -> Scale Down
+          if (scrollRatio > values.blendHeight[2].end) {
+            values.canvas_scale[0] = canvasScaleRatio; // 이전 "일분이" Canvas 일때 축소된 Scale 기준이 초기값
+            values.canvas_scale[1] = document.body.offsetWidth / (1.5 * objs.canvas.width); // 끝나는 시점에는 "특정 브라우저 뷰포트 width"보다 작게 나와야하고 / 현재 Canvas width 와의 너비 비율
+
+            values.canvas_scale[2].start = values.blendHeight[2].end + 0.01; // Scale down 시작 시점 -> Blending 이 끝나는 시점 + a
+            values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2;
+
+            objs.canvas.style.transform = `scale(${calcValues(values.canvas_scale, currentYOffset)})`;
+          }
         }
         break;
     }
