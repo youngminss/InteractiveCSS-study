@@ -109,7 +109,13 @@
         imagesPath: ["./images/blend-image-1.jpg", "./images/blend-image-2.jpg"],
         images: [],
       },
-      values: {},
+      values: {
+        // 창 변화에 따라 양옆 흰색 Rect 크기에 대한 비율과, 스크롤 애니메이션 구간이 달라질 수 있다.
+        // 동적으로 구해야함
+        rect1X: [0, 0, { start: 0, end: 0 }],
+        rect2X: [0, 0, { start: 0, end: 0 }],
+        rectStartY: 0, // Scene 4 Section 으로 부터 Canvas 시작 까지의 height (불변)
+      },
     },
   ];
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
@@ -313,7 +319,45 @@
           canvasScaleRatio = widthRatio;
         }
         objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
+        objs.context.fillStyle = "white"; // 양 옆 White Rect 색
         objs.context.drawImage(objs.images[0], 0, 0);
+
+        // 캔버스 사이즈에 맞춰 가정한 InnerWidth 와 InnerHeight
+        // 💡 가로 width 에 대해, window.innerWidth 대신, body 의 offsetWidth 를 쓴 이유 = 스크롤 바 width 때문
+        // window.innerWidth 는 참고로, 스크롤 바 width 까지 포함한 width 를 반환
+        const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
+        const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
+
+        if (!values.rectStartY) {
+          // 💡 Canvas 의 시작시점을 알기위해 Canvas 의 Top 값을 getBoundingClientRect 객체로 얻으면 안되는 이유
+          // = scroll 은, 얼마나 빠르게 하냐에따라, 빈 틈이 존재한다.
+          // values.rectStartY = objs.canvas.getBoundingClientRect().top;
+
+          // 💡 결국, 절대적은 위치를 찾는데, Element.offsetTop 을 이용할 것인데, 중요한점
+          // - Canvas 가 현재 Scale 되어 있는데, Scale 은 초기에 설정된 크기 정보랑은 독립된 크기이다.
+          // - 고로, 조정된 Scale 크기의 영역을 뺀, 나머지 높이 부분의 / 2 한 값을, 적용해야 정확하다.
+          values.rectStartY = objs.canvas.offsetTop + (objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2;
+          console.log(values.rectStartY);
+          values.rect1X[2].start = window.innerHeight / 2 / scrollHeight;
+          values.rect2X[2].start = window.innerHeight / 2 / scrollHeight;
+          values.rect1X[2].end = values.rectStartY / scrollHeight;
+          values.rect2X[2].end = values.rectStartY / scrollHeight;
+        }
+
+        // 첫 번째 블랜딩 이미지 초기 양 옆 박스 위치 & 크기 설정
+        const whiteRectWidth = recalculatedInnerWidth * 0.15;
+        values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
+        values.rect1X[1] = values.rect1X[0] - whiteRectWidth;
+        values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth;
+        values.rect2X[1] = values.rect2X[0] + whiteRectWidth;
+
+        // 좌우 흰색 박스 그리기
+        // objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), recalculatedInnerHeight);
+        // objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth), recalculatedInnerHeight);
+
+        objs.context.fillRect(calcValues(values.rect1X, currentYOffset), 0, parseInt(whiteRectWidth), recalculatedInnerHeight);
+        objs.context.fillRect(calcValues(values.rect2X, currentYOffset), 0, parseInt(whiteRectWidth), recalculatedInnerHeight);
+        2;
         break;
     }
   }
