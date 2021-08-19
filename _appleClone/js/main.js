@@ -114,6 +114,7 @@
         // 동적으로 구해야함
         rect1X: [0, 0, { start: 0, end: 0 }],
         rect2X: [0, 0, { start: 0, end: 0 }],
+        blendHeight: [0, 0, { start: 0, end: 0 }],
         rectStartY: 0, // Scene 4 Section 으로 부터 Canvas 시작 까지의 height (불변)
       },
     },
@@ -399,6 +400,27 @@
           objs.canvas.classList.remove("sticky");
         } else {
           step = 2;
+          // 이미지 블랜딩
+          // blendHeight: [0, 0, { start: 0, end: 0 }] 초기값
+          // start ~ end 는 모두, 그 Scene 에서의 전체 높이에 대한 "비율(0~1) 이다."(상기)
+          values.blendHeight[0] = 0;
+          values.blendHeight[1] = objs.canvas.height;
+          values.blendHeight[2].start = values.rect1X[2].end;
+          values.blendHeight[2].end = values.blendHeight[2].start + 0.2;
+          const blendHeight = calcValues(values.blendHeight, currentYOffset);
+
+          objs.context.drawImage(
+            objs.images[1],
+            0,
+            objs.canvas.height - blendHeight,
+            objs.canvas.width,
+            blendHeight,
+            0,
+            objs.canvas.height - blendHeight,
+            objs.canvas.width,
+            blendHeight,
+          );
+
           objs.canvas.classList.add("sticky");
           objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
         }
