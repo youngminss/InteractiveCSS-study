@@ -542,6 +542,8 @@
 
     if (yOffset > 0) {
       let siId = setInterval(() => {
+        // window.scrollTo(x,y) : 스크롤을 이동시킬 x, y 만큼 이동
+        // 🔍 기본이, 보통 pageYOffset 값은 보존 되는데, 새로고침했을 때, 페이지 상단으로 이동하는 것은, 이런 처리를 해줘서 그렇다.
         window.scrollTo(0, tempYOffset);
         tempYOffset += 2;
 
@@ -566,13 +568,15 @@
     // 모바일 폰 이상에서
     window.addEventListener("resize", () => {
       if (window.innerHeight > 900) {
-        setLayout();
-        sceneInfo[3].values.rectStartY = 0;
+        // setLayout();
+        // sceneInfo[3].values.rectStartY = 0;
+        window.location.reload();
       }
     });
 
     // 폰의 경우, 폰을 가로 or 세로로 변경하는 경우, 화면 돌려지고 "잠시후에" 적용
     window.addEventListener("orientationchange", () => {
+      window.scrollTo(0, 0);
       setTimeout(setLayout, 500);
     });
 
