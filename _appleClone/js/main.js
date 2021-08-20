@@ -531,9 +531,9 @@
     }
   }
 
+  // ❗ 초기 프로젝트 로드 중인데, 그전에 스크롤을 하려는 경우 방지 => 프로젝트 전부 로드 된 후
   window.addEventListener("load", () => {
     document.body.classList.remove("before-load"); // loading svg 클래스 만! 제거
-
     setLayout();
     sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
 

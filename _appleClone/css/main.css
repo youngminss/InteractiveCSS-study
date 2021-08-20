@@ -256,6 +256,17 @@ a {
   opacity: 0;
   transition: 0.5s;
 }
+
+/* ❗ 스크롤 중간시점에서 새로고침이, 캔버스 시점 버그 방지 */
+/* 
+이유
+- Scene 들 중에서, 2번째 Scene 제오하고는 전부, setLayout() 후에, 제대로 된 height 가 설정된다.
+- 그리고, Canvas 애니메이션은 "스크롤이 발생할 때" 연속적으로 보여지는데, 중간지점에서 새로고침 후, 아무 동작안하면, 브라우저는 스크롤 감지 된 것이 없는 걸로 알고 있다.
+- 결론은, 우리가 preload 상태인 .before-load 클래스가 존재할 때는, 아예 요소를 보여주지 않다가, load 가 전부 완료하면, setLayout 이 적용이 되었을 테니, 그 이후에 보여주는 방식 
+*/
+.before-load .container {
+  display: none;
+}
 .before-load .loading {
   opacity: 1;
 }
