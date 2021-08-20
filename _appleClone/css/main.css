@@ -240,6 +240,9 @@ a {
   display: block;
   will-change: transform, opacity;
 }
+.scorll-effect-end .sticky-elem {
+  display: none !important;
+}
 
 /* 🔵 로딩중 창 */
 .loading {
@@ -301,6 +304,11 @@ a {
   stroke-dashoffset: 0;
   fill: transparent; /* transparent : 투명하게 */
   animation: loading-circle-ani 1s infinite;
+}
+
+/* 🔵 마지막 임시 정적 컨텐츠 */
+.normal-content {
+  margin-bottom: 10rem;
 }
 
 /* 💻 Desktop */

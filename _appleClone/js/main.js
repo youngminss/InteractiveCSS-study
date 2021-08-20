@@ -482,9 +482,17 @@
       prevScrollHeight += sceneInfo[i].scrollHeight;
     }
 
+    if (delayedYOffset < prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+      document.body.classList.remove("scorll-effect-end");
+    }
     if (delayedYOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
       enterNewScene = true;
-      currentScene++;
+      if (currentScene === sceneInfo.length - 1) {
+        document.body.classList.add("scorll-effect-end");
+      }
+      if (currentScene < sceneInfo.length - 1) {
+        currentScene++;
+      }
       document.body.setAttribute("id", `show-scene-${currentScene}`);
     }
     if (delayedYOffset < prevScrollHeight) {
