@@ -19,8 +19,12 @@ a {
   color: rgb(29, 29, 31);
 }
 
-/* 본격적인 디자인 */
+/* ❗ 폰 가로 스크롤 방지 */
+.container {
+  overflow-x: hidden;
+}
 
+/* 본격적인 디자인 */
 .before-load {
   overflow-y: hidden;
 }
@@ -50,6 +54,7 @@ a {
   position: fixed;
   top: 0;
   background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: saturate(180%) blur(15px); /* for iphone */
   backdrop-filter: saturate(180%) blur(15px);
 }
 
@@ -181,8 +186,7 @@ a {
 }
 .canvas-caption {
   max-width: 1000px;
-  margin: -20em auto 0;
-
+  margin: -24rem auto 0;
   padding: 0 1rem;
   font-size: 1.2rem;
   color: #888;
@@ -234,6 +238,7 @@ a {
 #show-scene-2 #scroll-section-2 .sticky-elem,
 #show-scene-3 #scroll-section-3 .sticky-elem {
   display: block;
+  will-change: transform, opacity;
 }
 
 /* 🔵 로딩중 창 */
@@ -330,8 +335,8 @@ a {
     padding: 0;
   }
   .canvas-caption {
-    font-size: 2rem;
     padding: 0;
-    margin: -8em auto 0;
+    margin-top: -8rem;
+    font-size: 2rem;
   }
 }

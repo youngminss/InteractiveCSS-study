@@ -556,8 +556,10 @@
       }
     });
 
-    // 폰의 경우, 폰을 가로 or 세로로 변경하는 경우
-    window.addEventListener("orientationchange", setLayout);
+    // 폰의 경우, 폰을 가로 or 세로로 변경하는 경우, 화면 돌려지고 "잠시후에" 적용
+    window.addEventListener("orientationchange", () => {
+      setTimeout(setLayout, 500);
+    });
 
     // 프로젝트 Load 가 다된 시점(transitionend)에 이벤트 발생
     document.querySelector(".loading").addEventListener("transitionend", (e) => {
