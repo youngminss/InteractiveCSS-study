@@ -531,36 +531,39 @@
     }
   }
 
-  window.addEventListener("scroll", () => {
-    yOffset = window.pageYOffset;
-    scrollLoop();
-    checkMenu();
-
-    if (!rafState) {
-      rafId = requestAnimationFrame(loop);
-      rafState = true;
-    }
-  });
   window.addEventListener("load", () => {
     document.body.classList.remove("before-load"); // loading svg 클래스 만! 제거
 
     setLayout();
     sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+
+    window.addEventListener("scroll", () => {
+      yOffset = window.pageYOffset;
+      scrollLoop();
+      checkMenu();
+
+      if (!rafState) {
+        rafId = requestAnimationFrame(loop);
+        rafState = true;
+      }
+    });
+
+    // 모바일 폰 이상에서
+    window.addEventListener("resize", () => {
+      if (window.innerHeight > 900) {
+        setLayout();
+        sceneInfo[3].values.rectStartY = 0;
+      }
+    });
+
+    // 폰의 경우, 폰을 가로 or 세로로 변경하는 경우
+    window.addEventListener("orientationchange", setLayout);
+
+    // 프로젝트 Load 가 다된 시점(transitionend)에 이벤트 발생
+    document.querySelector(".loading").addEventListener("transitionend", (e) => {
+      document.body.removeChild(e.currentTarget); // 화살표 함수 -> this 사용 못함, event 객체의 currentTarget 사용
+    });
   });
 
-  // 프로젝트 Load 가 다된 시점(transitionend)에 이벤트 발생
-  document.querySelector(".loading").addEventListener("transitionend", (e) => {
-    document.body.removeChild(e.currentTarget); // 화살표 함수 -> this 사용 못함, event 객체의 currentTarget 사용
-  });
-  // 모바일 폰 이상에서
-  window.addEventListener("resize", () => {
-    if (window.innerHeight > 900) {
-      setLayout();
-      sceneInfo[3].values.rectStartY = 0;
-    }
-  });
-
-  // 폰의 경우, 폰을 가로 or 세로로 변경하는 경우
-  window.addEventListener("orientationchange", setLayout);
   setCanvasImages();
 })();

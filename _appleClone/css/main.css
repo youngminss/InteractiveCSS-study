@@ -21,6 +21,9 @@ a {
 
 /* 본격적인 디자인 */
 
+.before-load {
+  overflow-y: hidden;
+}
 /* 🔵 global & Local Nav Layout, Design */
 .global-nav {
   position: absolute;
